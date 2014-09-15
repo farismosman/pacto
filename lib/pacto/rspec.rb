@@ -82,7 +82,7 @@ RSpec::Matchers.define :have_validated do |method, uri|
     end
   end
 
-  failure_message_for_should do
+  failure_message do
     buffer = StringIO.new
     buffer.puts "expected Pacto to have validated #{@request_pattern}"
     if @matching_investigations.nil? || @matching_investigations.empty?
