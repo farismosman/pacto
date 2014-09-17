@@ -1,3 +1,4 @@
+require 'erb'
 module Pacto
   # Builds {Pacto::Contract} instances from Pacto's native Contract format.
   class NativeContractFactory
@@ -9,7 +10,8 @@ module Pacto
 
     def build_from_file(contract_path, host)
       contract_definition = File.read(contract_path)
-      definition = JSON.parse(contract_definition)
+      contract_definition = ERB.new contract_definition
+      definition = JSON.parse(contract_definition.result)
       schema.validate definition
       definition['request'].merge!('host' => host)
       body_to_schema(definition, 'request', contract_path)
