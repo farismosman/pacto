@@ -16,8 +16,8 @@ module Pacto
       @actor = actor
     end
 
-    def self.response_for(contract, data = {})
-      actor.build_response contract, data
+    def self.response_for(contract, data = {}, example = nil)
+      actor.build_response contract, data, example
     end
   end
 end

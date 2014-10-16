@@ -54,16 +54,22 @@ module Pacto
         uri_pattern = UriPattern.for(request_clause)
         stub = WebMock.stub_request(request_clause.http_method, uri_pattern)
 
-        stub.request_pattern.with(strict_details(request_clause)) if Pacto.configuration.strict_matchers
+        if contract.examples?
 
-        stub.to_return do |request|
-          pacto_request = Pacto::Adapters::WebMock::PactoRequest.new request
-          response = contract.response_for pacto_request
-          {
-            status: response.status,
-            headers: response.headers,
-            body: format_body(response.body)
-          }
+          contract.examples.each do |name, example|
+            request_match = name == 'default' ? {} : { body: WebMock.hash_including(example['request']['body']) }
+            stub = stub.with(request_match)
+            stub.to_return do |request|
+              build_response contract, request, example
+            end
+          end
+
+        else
+          stub = stub.with(strict_details(request_clause)) if Pacto.configuration.strict_matchers
+
+          stub.to_return do |request|
+            build_response contract, request
+          end
         end
       end
 
@@ -79,6 +85,16 @@ module Pacto
       end
 
       private
+
+      def build_response(contract, request, example = nil)
+        pacto_request = Pacto::Adapters::WebMock::PactoRequest.new request
+        response = contract.response_for pacto_request, example
+        {
+          status: response.status,
+          headers: response.headers,
+          body: format_body(response.body)
+        }
+      end
 
       def format_body(body)
         if body.is_a?(Hash) || body.is_a?(Array)

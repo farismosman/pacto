@@ -27,7 +27,7 @@ module Pacto
           end
         end
 
-        context 'example specified' do
+        context 'example specified by name' do
           let(:name) { '1' }
           subject(:generator) { described_class.new fallback, Pacto::Actors::NamedExampleSelector }
           let(:request) { generator.build_request contract, example_name: name }
@@ -48,6 +48,17 @@ module Pacto
             response_bodies = examples_responses.map(&:body)
             expect(request_bodies).to include request.body
             expect(response_bodies).to include response.body
+          end
+        end
+
+        context 'example specified by reference' do
+          let(:example_reference) { contract.examples.values[1] }
+          subject(:request) { generator.build_request contract, {}, example_reference }
+          subject(:response) { generator.build_response contract, {}, example_reference }
+
+          it 'uses the given example' do
+            expect(request.body).to eq(example_reference.request.body)
+            expect(response.body).to eq(example_reference.response.body)
           end
         end
       end

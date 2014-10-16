@@ -26,9 +26,9 @@ module Pacto
         @selector = selector
       end
 
-      def build_request(contract, values = {})
+      def build_request(contract, values = {}, example = nil)
         if contract.examples?
-          example = @selector.select(contract.examples, values)
+          example = find_example(contract.examples, values, example)
           data = contract.request.to_hash
           data['uri'] = contract.request.uri
           data['body'] = example.request.body
@@ -39,14 +39,24 @@ module Pacto
         end
       end
 
-      def build_response(contract, values = {})
+      def build_response(contract, values = {}, example = nil)
         if contract.examples?
-          example = @selector.select(contract.examples, values)
+          example = find_example(contract.examples, values, example)
           data = contract.response.to_hash
           data['body'] = example.response.body
           Pacto::PactoResponse.new(data)
         else
           @fallback_actor.build_response contract, values
+        end
+      end
+
+      private
+
+      def find_example(examples, values, example)
+        if example.nil?
+          @selector.select(examples, values)
+        else
+          Hashie::Mash.new example
         end
       end
     end

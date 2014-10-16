@@ -48,13 +48,11 @@ module Pacto
         }
       end
 
-      let(:request_pattern) { double('request_pattern') }
-
       subject(:adapter) { WebMockAdapter.new middleware }
 
       before(:each) do
         allow(stubbed_request).to receive(:to_return).with(no_args)
-        allow(stubbed_request).to receive(:request_pattern).and_return request_pattern
+        allow(stubbed_request).to receive(:with).and_return stubbed_request
       end
 
       describe '#initialize' do
@@ -93,7 +91,7 @@ module Pacto
             let(:http_method) { :get }
 
             it 'uses WebMock to stub the request' do
-              expect(request_pattern).to receive(:with).
+              expect(stubbed_request).to receive(:with).
                 with(headers: request.headers, query: request.params).
                 and_return(stubbed_request)
               adapter.stub_request! contract
@@ -104,7 +102,7 @@ module Pacto
             let(:http_method) { :post }
 
             it 'uses WebMock to stub the request' do
-              expect(request_pattern).to receive(:with).
+              expect(stubbed_request).to receive(:with).
                 with(headers: request.headers, body: request.params).
                 and_return(stubbed_request)
               adapter.stub_request! contract
@@ -123,7 +121,7 @@ module Pacto
             end
 
             it 'uses WebMock to stub the request' do
-              expect(request_pattern).to receive(:with).
+              expect(stubbed_request).to receive(:with).
                 with(query: request.params).
                 and_return(stubbed_request)
               adapter.stub_request! contract
@@ -142,7 +140,7 @@ module Pacto
             end
 
             it 'uses WebMock to stub the request' do
-              expect(request_pattern).to receive(:with).
+              expect(stubbed_request).to receive(:with).
                 with({}).
                 and_return(stubbed_request)
               adapter.stub_request! contract

@@ -53,8 +53,8 @@ module Pacto
       @request_pattern ||= request_pattern_provider.for(request)
     end
 
-    def response_for(pacto_request)
-      provider.response_for self, pacto_request
+    def response_for(pacto_request, example = nil)
+      provider.response_for self, pacto_request, example
     end
 
     def execute(additional_values = {})

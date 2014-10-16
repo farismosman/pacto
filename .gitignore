@@ -24,3 +24,5 @@ tmp
 .sublime*
 tags
 pacto.log
+.ruby-gemset
+.ruby-version
