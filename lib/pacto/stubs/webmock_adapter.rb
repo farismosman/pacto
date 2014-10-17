@@ -52,19 +52,20 @@ module Pacto
       def stub_request!(contract)
         request_clause = contract.request
         uri_pattern = UriPattern.for(request_clause)
-        stub = WebMock.stub_request(request_clause.http_method, uri_pattern)
 
         if contract.examples?
 
           contract.examples.each do |name, example|
             request_match = name == 'default' ? {} : { body: WebMock.hash_including(example['request']['body']) }
+            stub = WebMock.stub_request(request_clause.http_method, uri_pattern)
             stub = stub.with(request_match)
             stub.to_return do |request|
-              build_response contract, request, example
+              response = build_response contract, request, example
             end
           end
 
         else
+          stub = WebMock.stub_request(request_clause.http_method, uri_pattern)
           stub = stub.with(strict_details(request_clause)) if Pacto.configuration.strict_matchers
 
           stub.to_return do |request|
