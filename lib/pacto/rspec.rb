@@ -92,8 +92,14 @@ RSpec::Matchers.define :have_validated do |method, uri|
     elsif @matching_investigations.map(&:contract).compact.empty?
       buffer.puts '  but a matching Contract was not found'
     elsif !successfully?
-      buffer.puts "with request #{@matching_investigations.first.request.body}"
-      buffer.puts "with response #{@matching_investigations.first.response.body}"
+      buffer.puts 'with request:'
+      buffer.puts "  HEADERS: #{@matching_investigations.first.request.headers}"
+      buffer.puts "  BODY: #{@matching_investigations.first.request.body}"
+
+      buffer.puts 'with response:'
+      buffer.puts "  HEADERS: #{@matching_investigations.first.response.headers}"
+      buffer.puts "  BODY: #{@matching_investigations.first.response.body}"
+
       buffer.puts '  but investigation errors were found:'
       buffer.print '    '
       buffer.puts investigation_citations.join "\n    "
