@@ -7,6 +7,7 @@ module Pacto
     property :schema, default: {}
     property :path
     property :headers
+    property :timeout
     property :params, default: {}
 
     def initialize(definition)

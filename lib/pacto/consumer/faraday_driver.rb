@@ -10,6 +10,7 @@ module Pacto
 
         response = conn.send(req.method) do |faraday_request|
           # faraday_request.url = req.uri
+          faraday_request.options.timeout = req.timeout
           faraday_request.headers = req.headers
           faraday_request.body = (req.body.is_a?(String) ? req.body : req.body.to_json)
         end
