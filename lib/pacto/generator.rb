@@ -79,7 +79,7 @@ module Pacto
     end
 
     def generate_schema(source, body, generator_options = Pacto.configuration.generator_options)
-      return if body.nil? || body.empty?
+      return if body.nil? || body.empty? || body == 'null'
 
       body_schema = JSON::SchemaGenerator.generate source, body, generator_options
       MultiJson.load(body_schema)
