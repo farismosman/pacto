@@ -43,6 +43,7 @@ module Pacto
         if contract.examples?
           example = find_example(contract.examples, values, example)
           data = contract.response.to_hash
+          data['headers'].merge! example.response.headers || {}
           data['body'] = example.response.body
           Pacto::PactoResponse.new(data)
         else
