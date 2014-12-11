@@ -40,7 +40,9 @@ module Pacto
         "Missing contract for services provided by #{@request.uri.host}"
       else
         status = successful? ? 'successful' : 'unsuccessful'
-        "#{status} investigation of #{@contract.name}"
+        summary = "#{status} investigation of #{@contract.name}"
+        summary = summary + "\n" + "\tCitations: \n\t\t#{@citations.join "\n\t\t"}" unless successful?
+        summary
       end
     end
   end
