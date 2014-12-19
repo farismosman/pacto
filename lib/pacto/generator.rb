@@ -16,7 +16,7 @@ module Pacto
       @consumer = consumer
     end
 
-    def generate(pacto_request, pacto_response)
+    def generate(pacto_request, pacto_response, options = nil)
       return unless Pacto.generating?
       logger.debug("Generating Contract for #{pacto_request}, #{pacto_response}")
       begin

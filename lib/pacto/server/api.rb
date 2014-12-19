@@ -44,6 +44,7 @@ module Pacto
         env.logger.info "Reponse body: #{resp.body}"
         process_pacto_response resp, env
       rescue => e
+        env.logger.warn e.backtrace.join("\n")
         env.logger.warn "responding with error: #{e.message}"
         [500, {}, e.message]
       end

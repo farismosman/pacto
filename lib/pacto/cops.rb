@@ -20,10 +20,10 @@ module Pacto
         @active_cops ||= registered_cops.dup
       end
 
-      def investigate(request_signature, pacto_response)
+      def investigate(request_signature, pacto_response, options)
         return unless Pacto.validating?
 
-        contract = Pacto.contracts_for(request_signature).first
+        contract = options[:contract].nil? ? Pacto.contracts_for(request_signature).first : options[:contract]
         if contract
           investigation = perform_investigation request_signature, pacto_response, contract
         else

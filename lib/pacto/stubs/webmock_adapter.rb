@@ -16,6 +16,10 @@ module Pacto
         def path
           @webmock_request_signature.uri.path
         end
+
+        def webmock_request_signature
+          @webmock_request_signature
+        end
       end
 
       class PactoResponse < Pacto::PactoResponse
@@ -59,8 +63,9 @@ module Pacto
             request_match = name == 'default' ? {} : { body: WebMock.hash_including(example['request']['body']) }
             stub = WebMock.stub_request(request_clause.http_method, uri_pattern)
             stub = stub.with(request_match)
-            stub.to_return do |request|
-              response = build_response contract, request, example
+            stub.to_return do |request_signature|
+              @middleware.register_contract(request_signature, contract, example)
+              response = build_response contract, request_signature, example
             end
           end
 
