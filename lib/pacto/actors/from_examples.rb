@@ -21,7 +21,7 @@ module Pacto
       end
     end
     class FromExamples
-      def initialize(fallback_actor = JSONGenerator, selector = Pacto::Actors::FirstExampleSelector)
+      def initialize(fallback_actor = JSONGenerator, selector = Pacto::Actors::NamedExampleSelector)
         @fallback_actor = fallback_actor
         @selector = selector
       end
