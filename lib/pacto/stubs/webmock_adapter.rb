@@ -60,7 +60,7 @@ module Pacto
         if contract.examples?
 
           contract.examples.each do |name, example|
-            next if example['test']
+            next if examples.first and example.first.start_with?('test')
             request_match = name == 'default' ? {} : { body: WebMock.hash_including(example['request']['body']) }
             stub = WebMock.stub_request(request_clause.http_method, uri_pattern)
             stub = stub.with(request_match)
