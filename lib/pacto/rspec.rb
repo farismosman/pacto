@@ -98,7 +98,11 @@ RSpec::Matchers.define :have_validated do |method, uri|
 
       buffer.puts 'with response:'
       buffer.puts "  HEADERS: #{@matching_investigations.first.response.headers}"
-      buffer.puts "  BODY: #{@matching_investigations.first.response.body}"
+      if @matching_investigations.first.response.body.ascii_only?
+        buffer.puts "  BODY: #{@matching_investigations.first.response.body}"
+      else
+        buffer.puts "  BODY: binary content"
+      end
 
       buffer.puts '  but investigation errors were found:'
       buffer.print '    '
