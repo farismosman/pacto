@@ -59,14 +59,14 @@ module Pacto
 
         if contract.examples?
 
-          contract.examples.each do |name, example|
-            next if examples.first and example.first.start_with?('test')
+          stub_examples = contract.examples.reject {|name, _| name.start_with? 'test' }
+          stub_examples.each do |name, example|
             request_match = name == 'default' ? {} : { body: WebMock.hash_including(example['request']['body']) }
             stub = WebMock.stub_request(request_clause.http_method, uri_pattern)
             stub = stub.with(request_match)
             stub.to_return do |request_signature|
               @middleware.register_contract(request_signature, contract, example)
-              response = build_response contract, request_signature, example
+              build_response contract, request_signature, example
             end
           end
 
