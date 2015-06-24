@@ -48,7 +48,10 @@
       "required": ["status"],
       "properties": {
         "status":{
-          "type": "integer"
+          "type": ["integer", "array"],
+          "items": {
+            "type": [ "integer" ]
+          }
         },
         "body": {
           "description": "body is deprecated, use schema",
