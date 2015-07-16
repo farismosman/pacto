@@ -14,7 +14,9 @@ module Pacto
         schema = contract.send(@clause).schema
         if schema && !schema.empty?
           schema['id'] = contract.file unless schema.key? 'id'
-          JSON::Validator.fully_validate(schema, body, version: :draft3)
+          JSON::Validator.fully_validate(schema, body, version: :draft3).map do |message|
+            "In #{@clause}: #{message}"
+          end
         end || []
       end
     end
