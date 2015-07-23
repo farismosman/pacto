@@ -44,8 +44,8 @@ module Pacto
         if contract.examples?
           example = find_example(contract.examples, values, example)
           data = contract.response.to_hash
-          if example.status
-            data['status'] = example.status
+          if example.response.status
+            data['status'] = example.response.status
           elsif data['status'].is_a? Array
             data['status'] = data['status'].first
           end
