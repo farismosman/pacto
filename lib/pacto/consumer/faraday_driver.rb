@@ -3,7 +3,7 @@ module Pacto
     class FaradayDriver
       # Sends a Pacto::PactoRequest
       def execute(req)
-        conn = Faraday.new(url: req.uri.to_s) do |faraday|
+        conn = Faraday.new(url: req.uri.to_s, ssl: {verify: false}) do |faraday|
           faraday.response :logger if Pacto.configuration.logger.level == :debug
           faraday.adapter Faraday.default_adapter
         end
