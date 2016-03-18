@@ -28,7 +28,6 @@ module Pacto
              expect(obj['host']).to eq("api.some.com")
              expect(obj['basePath']).to eq("/")
              expect(obj['paths']).to eq({})
-
           end
       end
     end

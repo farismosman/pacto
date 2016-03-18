@@ -1,5 +1,4 @@
-require 'cgi'
-require 'uri'
+require_relative 'mappers'
 
 module Pacto
   module Swagger
