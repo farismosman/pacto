@@ -49,11 +49,6 @@ module Pacto
       end
     end
 
-  end
-end
-
-module Pacto
-  module Swagger
     module Responses
       def self.get(contract)
         responses = {}
@@ -64,6 +59,7 @@ module Pacto
         return responses
       end
     end
+
   end
 end
 
