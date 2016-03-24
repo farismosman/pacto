@@ -16,6 +16,7 @@ module Pacto
         validate_task
         generate_task
         meta_validate
+        swagger_task
       end
     end
 
@@ -38,6 +39,18 @@ module Pacto
         end
 
         generate_contracts(args[:input_dir], args[:output_dir], args[:host])
+      end
+    end
+
+    def swagger_task
+      desc "Generate swagger docs from contracts"
+      task :swagger, [:config] do |task, args|
+        if args.to_a.size < 1
+          fail Pacto::UI.yellow('USAGE: rake pacto:swagger[<config_file>]')
+        end
+
+        config =  JSON.parse(File.read(args[:config]))
+        Pacto::Swagger::Generator.generate(config)
       end
     end
 

@@ -1,0 +1,14 @@
+{
+  "version" : "1.0",
+  "title" : "api doc",
+  "description":"this is our api doc",
+  "contact":"awesome team",
+  "email":"awesomeness@test.com",
+  "host":"api.some.com",
+  "basePath":"/",
+  "swagger_document": "spec/fixtures/swagger/swagger_example.json",
+  "contracts": [
+    "spec/fixtures/contracts/simple_contract.json",
+    "spec/fixtures/contracts/contract.json"
+  ]
+}
