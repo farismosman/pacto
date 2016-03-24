@@ -51,17 +51,20 @@ module Pacto
         return path, request
       end
 
-      def self.generate(contracts)
+      def self.generate(config)
         paths = {}
-        for contract in contracts
-          content = document(contract)
+        path_to_contracts = config['contracts']
+        path_to_swagger_document = config['swagger_document']
+
+        for path_to_contract in path_to_contracts
+          content = document(path_to_contract)
           path = content.first()
           doc = content.last()
           paths.has_key?(path) ? paths[path].merge!(doc[path]) : paths.merge!(doc)
         end
 
-        File.open('api_docs/swagger/swagger.json', 'w') do |file|
-          file.write(swagger_object(paths))
+        File.open(path_to_swagger_document, 'w') do |file|
+          file.write(swagger_object(config, paths))
         end
       end
 

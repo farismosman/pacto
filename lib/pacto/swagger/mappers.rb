@@ -42,7 +42,7 @@ module Pacto
            end
          end
 
-         unless request_schema.empty?
+         unless request_schema.nil? || request_schema.empty?
            parameters.push(body(request_schema))
          end
        return parameters
