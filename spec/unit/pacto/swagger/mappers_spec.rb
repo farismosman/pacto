@@ -128,5 +128,18 @@ module Pacto
       end
     end
 
+    describe 'http method' do
+      it 'should get http method from contract' do
+        contract = {
+          'request' => {
+            'http_method' => 'GET'
+          }
+        }
+
+        http_method = Pacto::Swagger::HttpMethod.get(contract)
+
+        expect(http_method).to eq('get')
+      end
+    end
   end
 end

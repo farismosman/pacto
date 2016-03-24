@@ -60,11 +60,6 @@ module Pacto
       end
     end
 
-  end
-end
-
-module Pacto
-  module Swagger
     module HttpMethod
       def self.get(contract)
         http_method = contract['request']['http_method']
