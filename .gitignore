@@ -26,3 +26,4 @@ tags
 pacto.log
 .ruby-gemset
 .ruby-version
+spec/fixtures/swagger/swagger.json

@@ -65,6 +65,7 @@ module Pacto
 
         File.open(path_to_swagger_document, 'w') do |file|
           file.write(swagger_object(config, paths))
+          puts Pacto::UI.green("Generated a swagger document in #{path_to_swagger_document}")
         end
       end
 
