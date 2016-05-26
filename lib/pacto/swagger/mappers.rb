@@ -38,7 +38,7 @@ module Pacto
       def self.get(contract)
          parameters = []
          url = URI.parse(contract["request"]["path"])
-         properties = contract['request']['properties'] || {}
+         properties = contract['request']['parameters'] || {}
          request_schema = contract["request"]["schema"]
          query = url.query
 

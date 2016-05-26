@@ -39,7 +39,7 @@ module Pacto
           contract = {
             'request' => {
               'path' => 'www.host.com/users?name=dude',
-              'properties' => {
+              'parameters' => {
                 'name' => {
                   'description'=> 'First name of the user',
                   'required' => false,
@@ -67,7 +67,7 @@ module Pacto
           contract = {
             'request' => {
               'path' => 'www.host.com/users?name=dude',
-              'properties' => {'name' =>
+              'parameters' => {'name' =>
                 {
                   'description'=> 'First name of the user',
                   'type' => 'string'
@@ -83,6 +83,32 @@ module Pacto
             "name" => 'name',
             "in" => "query",
             "description" => "First name of the user",
+            "required" => true,
+            "type" => "string"
+            }
+          ])
+        end
+
+        it 'should not get parameters that do not exist' do
+          contract = {
+            'request' => {
+              'path' => 'www.host.com/users?name=dude',
+              'parameters' => {'age' =>
+                {
+                  'description'=> 'First name of the user',
+                  'type' => 'string'
+                }
+              },
+              'schema' => {}
+            }
+          }
+
+          obj = Pacto::Swagger::Parameters.get(contract)
+
+          expect(obj).to eq([{
+            "name" => 'name',
+            "in" => "query",
+            "description" => "Query Parameter",
             "required" => true,
             "type" => "string"
             }
