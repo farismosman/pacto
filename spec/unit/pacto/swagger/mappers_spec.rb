@@ -16,7 +16,7 @@ module Pacto
           expect(obj).to eq([])
         end
 
-        it 'should get a single parameter from contract' do
+        it 'should get a single parameter from contract with defaults' do
           contract = {
             'request' => {
               'path' => 'www.host.com/users?name=dude',
@@ -33,6 +33,60 @@ module Pacto
             "required" => true,
             "type" => "string"
             }])
+        end
+
+        it 'should get parameters description from contract' do
+          contract = {
+            'request' => {
+              'path' => 'www.host.com/users?name=dude',
+              'properties' => {
+                'name' => {
+                  'description'=> 'First name of the user',
+                  'required' => false,
+                  'in' => 'path',
+                  'type' => 'string'
+                }
+              },
+              'schema' => {}
+            }
+          }
+
+          obj = Pacto::Swagger::Parameters.get(contract)
+
+          expect(obj).to eq([{
+            "name" => 'name',
+            "in" => "path",
+            "description" => "First name of the user",
+            "required" => false,
+            "type" => "string"
+            }
+          ])
+        end
+
+        it 'should get parameters description from contract and set rest to default' do
+          contract = {
+            'request' => {
+              'path' => 'www.host.com/users?name=dude',
+              'properties' => {'name' =>
+                {
+                  'description'=> 'First name of the user',
+                  'type' => 'string'
+                }
+              },
+              'schema' => {}
+            }
+          }
+
+          obj = Pacto::Swagger::Parameters.get(contract)
+
+          expect(obj).to eq([{
+            "name" => 'name',
+            "in" => "query",
+            "description" => "First name of the user",
+            "required" => true,
+            "type" => "string"
+            }
+          ])
         end
 
         it 'should get multiple parameters from contract' do
