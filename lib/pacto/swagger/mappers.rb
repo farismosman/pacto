@@ -9,25 +9,25 @@ module Pacto
 
     module Parameters
 
-      def self.param(name, properties)
-        properties ||= {}
-        properties['in'] ||= 'query'
-        properties['description'] ||= "Query Parameter"
-        properties['type'] ||= "string"
-        properties['required'] = true if properties['required'].nil?
+      def self.param(name, swagger_params)
+        swagger_params ||= {}
+        swagger_params['in'] ||= 'query'
+        swagger_params['description'] ||= "Query Parameter"
+        swagger_params['type'] ||= "string"
+        swagger_params['required'] = true if swagger_params['required'].nil?
 
         return {
           "name" => name,
-          "in" => properties['in'],
-          "description" => properties['description'],
-          "required" => properties['required'],
-          "type" => properties['type']
+          "in" => swagger_params['in'],
+          "description" => swagger_params['description'],
+          "required" => swagger_params['required'],
+          "type" => swagger_params['type']
           }
       end
 
       def self.body(schema)
-        properties = {}
-        body = param("body", properties)
+        swagger_params = {}
+        body = param("body", swagger_params)
         body['description'] = "Request Body"
         body['in'] = 'body'
         body['schema'] = schema
@@ -38,7 +38,8 @@ module Pacto
       def self.get(contract)
          parameters = []
          url = URI.parse(contract["request"]["path"])
-         properties = contract['request']['parameters'] || {}
+         swagger = contract['swagger'] || {}
+         swagger_params = swagger['parameters'] || {}
          request_schema = contract["request"]["schema"]
          query = url.query
 
@@ -46,7 +47,7 @@ module Pacto
            params = CGI::parse(query)
 
            params.each do |key, value|
-             parameters.push(param(key, properties[key]))
+             parameters.push(param(key, swagger_params[key]))
            end
          end
 

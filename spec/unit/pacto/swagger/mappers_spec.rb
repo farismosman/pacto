@@ -39,6 +39,9 @@ module Pacto
           contract = {
             'request' => {
               'path' => 'www.host.com/users?name=dude',
+              'schema' => {}
+            },
+            'swagger' => {
               'parameters' => {
                 'name' => {
                   'description'=> 'First name of the user',
@@ -46,8 +49,7 @@ module Pacto
                   'in' => 'path',
                   'type' => 'string'
                 }
-              },
-              'schema' => {}
+              }
             }
           }
 
@@ -67,13 +69,15 @@ module Pacto
           contract = {
             'request' => {
               'path' => 'www.host.com/users?name=dude',
+              'schema' => {}
+            },
+            'swagger' => {
               'parameters' => {'name' =>
                 {
                   'description'=> 'First name of the user',
                   'type' => 'string'
                 }
-              },
-              'schema' => {}
+              }
             }
           }
 
