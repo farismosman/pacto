@@ -1,4 +1,8 @@
 require_relative 'mappers'
+require_relative 'http_method'
+require_relative 'parameters'
+require_relative 'path'
+require_relative 'responses'
 
 module Pacto
   module Swagger
@@ -42,7 +46,7 @@ module Pacto
           http_method => {}
           }
         }
-        request[path][http_method]['parameters'] = Swagger::Parameters.get(contract)
+        request[path][http_method]['parameters'] = Swagger::ContractMapper.map(contract)
         request[path][http_method]['responses'] = Swagger::Responses.get(contract)
         request[path][http_method]['description'] = contract['description']
         request[path][http_method]['operationId'] = contract['operationId']

@@ -11,7 +11,7 @@ module Pacto
             }
           }
 
-          obj = Pacto::Swagger::Parameters.get(contract)
+          obj = Pacto::Swagger::ContractMapper.map(contract)
 
           expect(obj).to eq([])
         end
@@ -24,7 +24,7 @@ module Pacto
             }
           }
 
-          obj = Pacto::Swagger::Parameters.get(contract)
+          obj = Pacto::Swagger::ContractMapper.map(contract)
 
           expect(obj).to eq([{
             "name" => 'name',
@@ -53,7 +53,7 @@ module Pacto
             }
           }
 
-          obj = Pacto::Swagger::Parameters.get(contract)
+          obj = Pacto::Swagger::ContractMapper.map(contract)
 
           expect(obj).to eq([{
             "name" => 'name',
@@ -81,7 +81,7 @@ module Pacto
             }
           }
 
-          obj = Pacto::Swagger::Parameters.get(contract)
+          obj = Pacto::Swagger::ContractMapper.map(contract)
 
           expect(obj).to eq([{
             "name" => 'name',
@@ -107,7 +107,7 @@ module Pacto
             }
           }
 
-          obj = Pacto::Swagger::Parameters.get(contract)
+          obj = Pacto::Swagger::ContractMapper.map(contract)
 
           expect(obj).to eq([{
             "name" => 'name',
@@ -127,7 +127,7 @@ module Pacto
             }
           }
 
-          obj = Pacto::Swagger::Parameters.get(contract)
+          obj = Pacto::Swagger::ContractMapper.map(contract)
 
           expect(obj).to eq([{
             "name" => 'name',
@@ -171,7 +171,7 @@ module Pacto
             }
           }
 
-          obj = Pacto::Swagger::Parameters.get(contract)
+          obj = Pacto::Swagger::ContractMapper.map(contract)
 
           expect(obj).to eq([{
             "name" => 'name',
