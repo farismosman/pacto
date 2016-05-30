@@ -106,6 +106,15 @@ module Pacto
             })).to eq(true)
           end
 
+          it 'should build swagger from contract when no parameters' do
+            path = 'www.host.com/users'
+            parameters = {}
+
+            param = Pacto::Swagger::Parameters.build(path, {}, parameters)
+
+            expect(param).to eq([])
+          end
+
         end
       end
     end
